@@ -4,8 +4,17 @@ import {Form , Button, Card} from 'react-bootstrap'
 import {Component} from 'react'
 import Cards from './Card'
 import axios from 'axios'
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class App extends Component {
+
+  createNotification = (info) => {
+
+    NotificationManager.success(info, 'Success');
+
+  };
+  
 
   state = { 
     name: "Name",
@@ -29,6 +38,7 @@ class App extends Component {
     axios.post('https://testapp-gogaga.herokuapp.com/user/addInfo', data)
     .then(response=>{
       console.log(response);
+      this.createNotification("Added successfully")
     })
   }
 
@@ -51,6 +61,7 @@ class App extends Component {
       console.log(response);
       this.setState({postlist: response.data, heading:"All records", searchactive: false})
     })
+
   }
 
   render(){
@@ -86,9 +97,6 @@ class App extends Component {
       Get Data
     </Button>
 <h2>{this.state.heading}</h2>
-{/* <Cards name="Rakshit" location="India"/>
-<Cards name="Rakshit" location="USA"/>
-<Cards name="Rakshit" location="Canada"/> */}
 
 {postlist}
 {this.state.postlist.length ?null: <p>No results found</p>}
@@ -126,7 +134,7 @@ else{
 <h2>{this.state.heading}</h2>
 
 {postlist}
-{/* {this.state.postlist.length ?null: <p>No results found</p>} */}
+<NotificationContainer/>
   </div>
 
 
